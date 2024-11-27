@@ -1,0 +1,127 @@
+{"categories":[
+    {
+        "title":"Categories For Women",
+        "data": [
+                {
+                    "title":"Hoodies & Sweetshirt",
+                    "description":"Explore Now!",
+                    "image":"./images/women/womencategory.jpg"   
+                },
+                {
+                    "title":"Coats & Parkas",
+                    "description":"Explore Now!",
+                    "image":"./images/women/coats.jpg"   
+                },
+                {
+                    "title":"Tees & T-Shirt",
+                    "description":"Explore Now!",
+                    "image":"./images/women/tshirts.jpg"   
+                },
+                {
+                    "title":"Shorts",
+                    "description":"Explore Now!",
+                    "image":"./images/women/shorts.jpg"   
+                }
+            ]
+            
+        },
+        { "title":"Categories For Men",
+        "data":[
+            {
+                "title":"Shirts",
+                "description":"Explore Now!",
+                "image":"./images/men/shirts.jpg"   
+            },
+            {
+                "title":"Jeans",
+                "description":"Explore Now!",
+                "image":"./images/men/jeans.jpg"   
+            },
+            {
+                "title":"Hoodies & Sweetshirt",
+                "description":"Explore Now!",
+                "image":"./images/men/hoodies.jpg"   
+            },
+            {
+                "title":"Jackets",
+                "description":"Explore Now!",
+                "image":"./images/men/jackets.jpg"   
+            }
+                ]
+                
+            }
+        ],
+
+"footer":{
+
+            "items":[
+
+                {
+                    "title":"Need Help",
+                    "list":[
+                        {
+                            "label":"Contact Us",
+                            "path":"/contact-us"
+                        },
+                        {
+                            "label":"Track Order",
+                            "path":"/track-order"
+                        },
+                        {
+                            "label":"",
+                            "path":"/contact-us"
+                        },
+                        {
+                            "label":"Return & Refund",
+                            "path":"/refunds"
+                        },
+                        {
+                            "label":"FAQ",
+                            "path":"/Faq"
+                        }, 
+                        {
+                            "label":"Carrer",
+                            "path":"/carrer"
+                        }
+                    ]
+                },
+                {
+                    "title":"Company",
+                    "list":[
+                        {
+                            "label":"About Us",
+                            "path":"/about"
+                        },
+                        {
+                            "label":"Media",
+                            "path":"/media"
+                        }
+                    ]
+                },
+                {
+                    "title":"More Info",
+                    "list":[
+                        {
+                            "label":"Term and Conditions",
+                            "path":"/terms-conditions"
+                        },
+                        {
+                            "label":"Privacy Policy",
+                            "path":"/policies"
+                        },
+                        {
+                            "label":"Shipping Policy",
+                            "path":"/policies"
+                        }
+                    ]
+                },
+                {
+                    "title":"Location",
+                    "description":"Location Country"
+                }
+            ],
+
+            "copright":"Copyright © 2024 Urban Aisle"
+            
+        }
+}

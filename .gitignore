@@ -21,3 +21,68 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# General
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+*.log.*
+
+# OS generated files
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Maven/Gradle
+target/
+*.iml
+*.iws
+*.ipr
+.idea/
+.gradle/
+build/
+
+# Eclipse specific
+.project
+.classpath
+.settings/
+
+# IntelliJ specific
+*.idea/
+*.ipr
+*.iws
+.idea/*
+out/
+
+# Node modules
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# TailwindCSS build artifacts
+dist/
+css/output.css
+postcss.config.js
+tailwind.config.js
+
+# Environment files
+.env
+.env.*
+
+# Spring Boot
+application.properties
+application.yml
+application-*.properties
+application-*.yml
+
+# VS Code specific
+.vscode/
+
+# Database files
+*.db
+*.sql
+*.data

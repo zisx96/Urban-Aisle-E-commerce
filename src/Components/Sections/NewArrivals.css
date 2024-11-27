@@ -1,0 +1,17 @@
+.carousel-container {
+    max-width: 1200px; /* Adjust based on your design */
+    margin: 0 auto;
+  }
+  
+  .react-slider-custom-item {
+    display: flex;
+    justify-content: center;
+    padding: 0 10px; /* Adds spacing between cards */
+  }
+  
+  .card {
+    max-width: 260px;
+    max-height: 360px;
+    margin: 0 auto;
+  }
+  
