@@ -17,9 +17,9 @@ const Navigation = () => {
             {/* {Navigation Items} */}
           <ul className='flex gap-14 text-black hover:text-gray-500' >
             <li ><NavLink to='/' className={({isActive})=> isActive ? 'active-link' : ''}>Shop</NavLink></li>
-            <li ><NavLink to='/mens' className={({isActive})=> isActive ? 'active-link' : ''}>Men</NavLink></li>
-            <li ><NavLink to='/womens' className={({isActive})=> isActive ? 'active-link' : ''}>Women</NavLink></li>
-            <li ><NavLink to='/kids' className={({isActive})=> isActive ? 'active-link' : ''}>Kids</NavLink></li>
+            <li ><NavLink to='/men' className={({isActive})=> isActive ? 'active-link' : ''}>Men</NavLink></li>
+            <li ><NavLink to='/women' className={({isActive})=> isActive ? 'active-link' : ''}>Women</NavLink></li>
+            <li ><NavLink to='/kid' className={({isActive})=> isActive ? 'active-link' : ''}>Kids</NavLink></li>
           </ul>
         </div>
         <div className='flex-justify-center'>

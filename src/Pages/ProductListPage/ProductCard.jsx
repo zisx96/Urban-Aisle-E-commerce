@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
 import SvgFavourite from '../../Components/common/SvgFavourite';
+import { Link } from 'react-router-dom';
 
-const ProductCard = ({ title, description, price, brand, thumbnail }) => {
+const ProductCard = ({id, title, description, price, brand, thumbnail }) => {
   const [isFilled, setIsFilled] = useState(false);
 
   const toggleFill = () => setIsFilled(!isFilled);
 
   return (
     <div className="flex flex-col hover:scale-105 relative group">
+      <Link to={`/product/${id}`}>
       {/* Card Thumbnail */}
       <img
         className="h-[320px] w-[280px] bg-cover bg-center border rounded-lg cursor-pointer object-cover block"
         src={thumbnail}
         alt={title}
       />
-
+      </Link>
       {/* Card Content */}
       <div className="flex justify-between items-center">
         <div className="flex flex-col pt-2">
