@@ -1,5 +1,4 @@
 /.metadata/
-
 # Compiled Java classes
 *.class
 
@@ -18,11 +17,15 @@ logs/
 /.settings/
 /.project
 /.classpath
+# Exclude Eclipse's build and workspace directories
+/.metadata/
+/bin/
+/build/
 
 # Maven target directory
 /target/
 
-# IntelliJ IDEA files (if any team member uses IntelliJ)
+# IntelliJ IDEA files (optional if some team members use IntelliJ)
 /.idea/
 /*.iml
 
