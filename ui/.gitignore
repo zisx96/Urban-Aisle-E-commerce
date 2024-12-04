@@ -1,88 +1,64 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
+# Node.js dependencies
 /node_modules
-/.pnp
-.pnp.js
 
-# testing
-/coverage
-
-# production
+# Build output
 /build
+/dist
 
-# misc
-.DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# General
+# Runtime files
+*.log
+*.lock
+*.env.local
+*.env.development.local
+*.env.test.local
+*.env.production.local
+
+# Local environment settings
+.env
+
+# Editor directories and files
+.vscode/
+.idea/
+*.sublime-workspace
+
+# OS-specific files
 .DS_Store
 Thumbs.db
 
-# Logs
-logs/
-*.log
-*.log.*
+# Test coverage
+/coverage
 
-# OS generated files
-*.swp
-*.swo
-*.bak
-*.tmp
+# React specific files
+.eslintcache
+*.cache
 
-# Maven/Gradle
-target/
+# Ignore generated CSS files except Tailwind input files
+*.css
+!src/index.css
+!src/App.css
+
+# Ignore Tailwind-related files only if explicitly named in this format
+*.config.js
+!tailwind.config.js
+!postcss.config.js
+
+# Ignore service worker generated files
+/service-worker.js
+/precache-manifest*.js
+
+# Yarn specific
+.pnp.*
+.yarn-integrity
+
+# Exclude debugging IDE files
 *.iml
-*.iws
-*.ipr
-.idea/
-.gradle/
-build/
+*.swp
 
-# Eclipse specific
-.project
-.classpath
-.settings/
-
-# IntelliJ specific
-*.idea/
-*.ipr
-*.iws
-.idea/*
-out/
-
-# Node modules
-node_modules/
-npm-debug.log
-yarn-error.log
-
-# TailwindCSS build artifacts
-dist/
-css/output.css
-postcss.config.js
-tailwind.config.js
-
-# Environment files
-.env
-.env.*
-
-# Spring Boot
-application.properties
-application.yml
-application-*.properties
-application-*.yml
-
-# VS Code specific
-.vscode/
-
-# Database files
-*.db
-*.sql
-*.data
+# Exclude lockfiles if you prefer one package manager
+yarn.lock
+package-lock.json
