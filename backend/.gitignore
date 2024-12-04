@@ -1,0 +1,59 @@
+/.metadata/
+# Compiled Java classes
+*.class
+
+# Log files
+*.log
+logs/
+*.out
+*.err
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+
+# Eclipse project files
+/.settings/
+/.project
+/.classpath
+# Exclude Eclipse's build and workspace directories
+/.metadata/
+/bin/
+/build/
+
+# Maven target directory
+/target/
+
+# IntelliJ IDEA files (optional if some team members use IntelliJ)
+/.idea/
+/*.iml
+
+# Spring Boot specific
+BOOT-INF/
+META-INF/
+*.jar
+*.war
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Exclude database files (if any)
+/*.h2.db
+/*.mv.db
+/*.sqlite
+/*.sqlite3
+
+# Exclude application properties (manually manage these)
+/src/main/resources/application.properties
+
+# Ignore environment-specific properties
+/src/main/resources/application-*.properties
+
+# Exclude sensitive files (keys, credentials, etc.)
+/src/main/resources/*.key
+/src/main/resources/*.pem
+
+# Generated files
+hs_err_pid*
