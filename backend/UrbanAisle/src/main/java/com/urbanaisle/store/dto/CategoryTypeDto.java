@@ -13,6 +13,7 @@ import java.util.UUID;
 @Builder
 public class CategoryTypeDto {
 
+
     private UUID id;
     private String name;
     private String code;

@@ -2,12 +2,8 @@ package com.urbanaisle.store.entities;
 
 import java.util.UUID;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class CategoryType {
 	
 	@Id
-	@Column
+	@GeneratedValue
 	private UUID id;
 	
 	@Column(nullable = false)
@@ -36,6 +32,7 @@ public class CategoryType {
 	
 	@ManyToOne
 	@JoinColumn(name = "category_id", nullable = false)
+	@JsonIgnore
 	private Category category;
 	
 	
