@@ -1,5 +1,6 @@
 package com.urbanaisle.store.dto;
 
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class ProductResourceDto {
+
 
     private UUID id;
     private String name;
