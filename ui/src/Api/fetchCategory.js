@@ -1,12 +1,13 @@
-import { API_URL, API_URLS } from "./constant"
+import axios from "axios";
+import { API_BASE_URL, API_URLS } from "./constant"
 
 export const fetchCategories = async() => {
 
-    const url = API_URL + API_URLS.GET_CATEGORIES;
+    const url = API_BASE_URL + API_URLS.GET_CATEGORIES;
 
     try {
 
-        const result = await(url,{
+        const result = await axios(url,{
 
             method:'GET'
         });

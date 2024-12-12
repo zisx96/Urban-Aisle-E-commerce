@@ -9,6 +9,6 @@ import com.urbanaisle.store.entities.Product;
 public interface IProductService {
 	
 	public Product addProduct(ProductDto productDto);
-	public List<Product> getAllProducts(UUID categoryId, UUID typeId);
+	public List<ProductDto> getAllProducts(UUID categoryId, UUID typeId);
 
 }

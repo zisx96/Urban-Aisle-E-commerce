@@ -19,9 +19,9 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts(@RequestParam(required = false) UUID categoryId, @RequestParam(required = false) UUID typeId ){
+    public ResponseEntity<List<ProductDto>> getAllProducts(@RequestParam(required = false) UUID categoryId, @RequestParam(required = false) UUID typeId ){
 
-        List<Product> productList = productService.getAllProducts(categoryId, typeId);
+        List<ProductDto> productList = productService.getAllProducts(categoryId, typeId);
 
         return new ResponseEntity<>(productList, HttpStatus.OK);
 

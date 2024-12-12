@@ -6,15 +6,19 @@ import reportWebVitals from './reportWebVitals';
 import 'react-multi-carousel/lib/styles.css';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './Routes';
+import { Provider } from 'react-redux';
+import store from './store/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  
+  <Provider store={store}>
   <RouterProvider router={router}>
 
     <App />
   </RouterProvider>
-  </React.StrictMode>
+  </Provider>
+  
 );
 
 // If you want to start measuring performance in your app, pass a function

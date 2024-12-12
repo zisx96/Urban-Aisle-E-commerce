@@ -8,19 +8,28 @@ import Category from './Components/Sections/Categories/Category';
 import NewArrivals from './Components/Sections/NewArrivals';
 import content from './data/Content.json'
 import { fetchCategories } from './Api/fetchCategory';
+import { useDispatch } from 'react-redux';
+import { loadCategories } from './store/features/category';
+import { setLoading } from './store/features/common';
 
-function App() {
+const App = () => {
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
 
+    dispatch(setLoading(true));
+
     fetchCategories().then(res => {
 
-      console.log("Category", res);
+      dispatch(loadCategories(res));
       
     }).catch(err => {
 
+    }).finally(() => {
+      dispatch(setLoading(false));
     })
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
