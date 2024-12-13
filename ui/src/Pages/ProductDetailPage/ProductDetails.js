@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import Breadcrumb from "../../Components/BreadCrumb/Breadcrumb";
-import content from "../../data/Content.json";
 import { useMemo } from "react";
 import Rating from "../../Components/Rating/Rating";
 import SizeFilter from '../../Components/Filters/SizeFilter'
@@ -11,9 +10,10 @@ import SvgCloth from "../../Components/common/SvgCloth"
 import SvgShipping from "../../Components/common/SvgShipping"
 import SvgReturn from "../../Components/common/SvgReturn"
 import SectionHeading from '../../Components/Sections/SectionsHeading/SectionHeading'
+import { useSelector } from "react-redux";
 import ProductCard from '../ProductListPage/ProductCard'
 
-const categories = content?.categories;
+//const categories = content?.categories;
 
 const extraSection = [
     {
@@ -36,27 +36,22 @@ const extraSection = [
 
 const ProductDetails = () => {
   const { product } = useLoaderData();
-  const [image, setImage] = useState(
-    product?.images[0]?.startsWith("http")
-      ? product?.images[0]
-      : product?.thumbnail
-  );
+  const [image, setImage] = useState();
   const [BreadCrumbLinks, setBreadCrumbLinks] = useState([]);
 
-  const similarProducts = useMemo(() => {
-    
-    return content?.products?.filter((item) => item?.type_id === product?.type_id && item?.id !== product?.id);
-  
-    }, [product]);
+  const [similarProducts, setSimilarProducts] = useState([]);
+
+  const categories = useSelector((state) => state?.categoryState?.categories);
+
 
   const productCategory = useMemo(() => {
     return categories?.find(
-      (category) => category?.id === product?.category_id
+      (category) => category?.id === product?.categoryId
     );
-  }, [product]);
+  }, [product, categories]);
 
   useEffect(() => {
-    setImage(product?.images[0]?.startsWith('http') ? product?.images[0] : product?.thumbnail)
+    setImage(product?.thumbnail);
     setBreadCrumbLinks([]);
     const arrayLinks = [
       {
@@ -65,20 +60,20 @@ const ProductDetails = () => {
       },
       {
         title: productCategory?.name,
-        path: productCategory?.path,
-      },
+        path: productCategory?.name,
+      }
     ];
 
-    const prodyctType = productCategory?.types?.find(
-      (item) => item?.id === product?.type_id
-    );
-    if (prodyctType) {
+    const productType = productCategory?.categoryTypes?.find((item) => item?.id === product?.categoryTypeId);
+
+    if(productType){
       arrayLinks?.push({
-        title: prodyctType?.name,
-        path: prodyctType?.name,
-      });
+        title: productType?.name,
+        path: productType?.name
+      })
     }
-    setBreadCrumbLinks([...arrayLinks]);
+    
+    setBreadCrumbLinks(arrayLinks);
   }, [productCategory, product]);
 
   return (
@@ -90,15 +85,15 @@ const ProductDetails = () => {
           <div className="w-[100%] md:w-[20%] justify-center h-[40px] md:h-[520px]">
             {/* Stack Images */}
             <div className="flex flex-row md:flex-col justify-center  h-full">
-              {product?.images[0]?.startsWith("http") &&
-                product?.images?.map((item, index) => {
+              { 
+                product?.productResources?.map((item, index) => {
                   return (
                     <button
-                      onClick={() => setImage(item)}
+                      onClick={() => setImage(item?.url)}
                       className="p-2 rounded-lg w-fit"
                     >
                       <img
-                        src={item}
+                        src={item?.url}
                         className="h-[60px] w-[60px] bg-cover bg-center 
                                         hover:scale-105 rounded-lg"
                         alt={"sample" + index}
@@ -123,7 +118,7 @@ const ProductDetails = () => {
         {/* Product Description */}
         <Breadcrumb links={BreadCrumbLinks} />
         <p className="text-3xl pt-5 pb-2">{product?.title}</p>
-        <Rating rating={product?.rating} />
+        <Rating rating={product?.rating || 0} />
 
         {/* Price Tag */}
         <p className="text-xl bold py-2">${product?.price}</p>
@@ -177,7 +172,7 @@ const ProductDetails = () => {
     <div className='grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 gap-10 pt-8 px-10 pb-20'>
                 {similarProducts?.map((item, index) => {
                     return(
-                        <ProductCard key={index} {...item}/>
+                        <ProductCard key={index} {...item} rating={item?.rating}/>
                     ) 
                 })}
                 {!similarProducts?.length && <p>No Products Found!</p>}

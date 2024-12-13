@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import Filter from '../../Components/common/Filter'
 import content from '../../data/Content.json'
 import Categories from '../../Components/Filters/Categories';
@@ -6,10 +6,17 @@ import PriceFilter from '../../Components/Filters/PriceFilter';
 import ColorsFilter from '../../Components/Filters/ColorsFilter';
 import SizeFilter from '../../Components/Filters/SizeFilter';
 import ProductCard from './ProductCard';
+import { getAllProducts } from '../../Api/fetchProducts';
+import { useDispatch, useSelector } from 'react-redux';
+import {setLoading} from "../../store/features/common"
 
 const categories = content?.categories;
 
 function ProductListPage({categoryType}) {
+
+    const categoryData = useSelector((state) => state?.categoryState?.categories);
+    const dispatch = useDispatch();
+    const [products, setProducts] = useState([]);
 
     const categoryContent = useMemo(() => {
 
@@ -19,6 +26,29 @@ function ProductListPage({categoryType}) {
     const productListItem = useMemo(() => {
         return content?.products?.filter((product) => product?.category_id === categoryContent?.id )
     }, [categoryContent]);
+
+    const category = useMemo(() => {
+        return categoryData?.find(element => element?.code === categoryType);
+    },[categoryData, categoryType]);
+
+    useEffect(() => {
+        dispatch(setLoading(true));
+        getAllProducts(category?.id).then(res => {
+
+            setProducts(res);
+
+        }).catch(err => {
+
+
+        }).finally(() => {
+
+            dispatch(setLoading(false));
+        })
+        
+    },[category?.id, dispatch])
+
+    console.log(products);
+    
 
   return (
     <div>
@@ -46,11 +76,11 @@ function ProductListPage({categoryType}) {
             </div>
             <div className='p-[15px]'>
                 {/* Products */}
-                <p className='text-black text-lg font-serif'>{categoryContent?.description}</p>
+                <p className='text-black text-lg font-serif'>{category?.description}</p>
                 <div className='grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 gap-10 pt-5'>
-                {productListItem?.map((item, index) => {
+                {products?.map((item, index) => {
                     return(
-                        <ProductCard key={index} {...item}/>
+                        <ProductCard key={item?.id+"_"+index} {...item} title={item?.name} />
                     ) 
                 })}
                 </div>

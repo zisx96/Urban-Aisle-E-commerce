@@ -4,7 +4,7 @@ import ShopApplicationWrapper from "./Pages/ProductListPage/ShopApplicationWrapp
 import App from "./App";
 import ProductListPage from "./Pages/ProductListPage/ProductListPage";
 import ProductDetails from "./Pages/ProductDetailPage/ProductDetails";
-import { loadProductById } from "./routes/Product";
+import { loadProductBySlug } from "./routes/Product";
 
 
 export const router = createBrowserRouter([
@@ -31,7 +31,7 @@ export const router = createBrowserRouter([
             },
             {
                 path:"/product/:productId",
-                loader: loadProductById,
+                loader: loadProductBySlug,
                 element: <ProductDetails />
             }
         ]

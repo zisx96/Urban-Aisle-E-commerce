@@ -11,4 +11,6 @@ import com.urbanaisle.store.entities.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, UUID>, JpaSpecificationExecutor<Product> {
 
+    Product findBySlug(String slug);
+
 }

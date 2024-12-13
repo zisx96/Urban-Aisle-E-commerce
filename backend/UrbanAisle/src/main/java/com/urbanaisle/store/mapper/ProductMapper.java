@@ -21,12 +21,17 @@ public class ProductMapper {
     public Product mapToProduct(ProductDto productDto) {
 
         Product product = new Product();
+        if(null != productDto.getId()){
+            product.setID(productDto.getId());
+        }
         product.setName(productDto.getName());
         product.setDescription(productDto.getDescription());
         product.setBrand(productDto.getBrand());
         product.setNewArrival(productDto.getIsNewArrival());
         product.setPrice(productDto.getPrice());
         product.setRating(productDto.getRating());
+        product.setSlug(productDto.getSlug());
+        product.setSlug(productDto.getSlug());
 
         Category category = categoryService.getCategory(productDto.getCategoryId());
         if(null != category){
@@ -59,6 +64,9 @@ public class ProductMapper {
 
         return productResources.stream().map(productResourceDto -> {
             Resources resources = new Resources();
+            if(null != productResourceDto.getId()){
+                resources.setId(productResourceDto.getId());
+            }
             resources.setName(productResourceDto.getName());
             resources.setType(productResourceDto.getType());
             resources.setUrl(productResourceDto.getUrl());
@@ -72,6 +80,9 @@ public class ProductMapper {
 
         return  productVariantDtos.stream().map(productVariantDto -> {
             ProductVariant productVariant = new ProductVariant();
+            if(null != productVariantDto.getId()){
+                productVariant.setID(productVariantDto.getId());
+            }
             productVariant.setColor(productVariantDto.getColor());
             productVariant.setSize(productVariantDto.getSize());
             productVariant.setStockQuantity(productVariantDto.getStockQuantity());
@@ -88,7 +99,7 @@ public class ProductMapper {
 
     }
 
-    private ProductDto mapProductToDto(Product product) {
+    public ProductDto mapProductToDto(Product product) {
 
         return ProductDto.builder()
                 .id(product.getID())
@@ -98,6 +109,7 @@ public class ProductMapper {
                 .isNewArrival(product.isNewArrival())
                 .rating(product.getRating())
                 .description(product.getDescription())
+                .slug(product.getSlug())
                 .thumbnail(getProductThumbnail(product.getResources())).build();
     }
 
@@ -105,5 +117,32 @@ public class ProductMapper {
 
         return resources.stream().filter(Resources::getIsPrimary)
                 .findFirst().orElse(null).getUrl();
+    }
+
+    public List<ProductVariantDto> mapProductVariantListToDto(List<ProductVariant> productVariant) {
+        return productVariant.stream().map(this::mapProductVariantDto).toList();
+    }
+
+    private ProductVariantDto mapProductVariantDto(ProductVariant productVariant) {
+        return ProductVariantDto.builder()
+                .color(productVariant.getColor())
+                .id(productVariant.getID())
+                .size(productVariant.getSize())
+                .stockQuantity((productVariant.getStockQuantity()))
+                .build();
+    }
+
+    public List<ProductResourceDto> mapProductResourcesListDto(List<Resources> resources) {
+        return resources.stream().map(this::mapResourceToDto).toList();
+    }
+
+    private ProductResourceDto mapResourceToDto(Resources resources) {
+        return ProductResourceDto.builder()
+                .id(resources.getId())
+                .url(resources.getUrl())
+                .name(resources.getName())
+                .isPrimary(resources.getIsPrimary())
+                .type(resources.getType())
+                .build();
     }
 }
