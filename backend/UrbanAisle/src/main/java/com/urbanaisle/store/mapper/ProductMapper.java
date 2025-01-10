@@ -31,7 +31,6 @@ public class ProductMapper {
         product.setPrice(productDto.getPrice());
         product.setRating(productDto.getRating());
         product.setSlug(productDto.getSlug());
-        product.setSlug(productDto.getSlug());
 
         Category category = categoryService.getCategory(productDto.getCategoryId());
         if(null != category){

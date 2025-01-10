@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import Breadcrumb from "../../Components/BreadCrumb/Breadcrumb";
 import { useMemo } from "react";
@@ -10,8 +10,10 @@ import SvgCloth from "../../Components/common/SvgCloth"
 import SvgShipping from "../../Components/common/SvgShipping"
 import SvgReturn from "../../Components/common/SvgReturn"
 import SectionHeading from '../../Components/Sections/SectionsHeading/SectionHeading'
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ProductCard from '../ProductListPage/ProductCard'
+import _ from 'lodash'
+import { getAllProducts } from '../../Api/fetchProducts';
 
 //const categories = content?.categories;
 
@@ -38,7 +40,7 @@ const ProductDetails = () => {
   const { product } = useLoaderData();
   const [image, setImage] = useState();
   const [BreadCrumbLinks, setBreadCrumbLinks] = useState([]);
-
+  const dispatch = useDispatch();
   const [similarProducts, setSimilarProducts] = useState([]);
 
   const categories = useSelector((state) => state?.categoryState?.categories);
@@ -46,9 +48,20 @@ const ProductDetails = () => {
 
   const productCategory = useMemo(() => {
     return categories?.find(
-      (category) => category?.id === product?.categoryId
+      (category) => category?.id === product?.categoryId  
     );
   }, [product, categories]);
+
+  useEffect(() => {
+
+    getAllProducts(product?.categoryId, product?.categoryTypeId).then(res => {
+      const exProduct = res?.filter((item) => item?.id !== product?.id);
+      setSimilarProducts(exProduct);
+    }).catch(() =>[
+
+    ])
+
+  }, [])
 
   useEffect(() => {
     setImage(product?.thumbnail);
@@ -56,7 +69,7 @@ const ProductDetails = () => {
     const arrayLinks = [
       {
         title: "shop",
-        path: "/",
+        path: "/"
       },
       {
         title: productCategory?.name,
@@ -76,6 +89,22 @@ const ProductDetails = () => {
     setBreadCrumbLinks(arrayLinks);
   }, [productCategory, product]);
 
+  const addItemToCart = useCallback(() => {
+    // dispatch(addToCart({id:product?id,quantity:1}));
+  }, []);
+
+  const colors = useMemo(() => {
+
+    const colorSet = _.uniq(_.map(product?.variants,'color'));
+    return colorSet;
+  }, [product]);
+
+  const sizes = useMemo(() => {
+
+    const sizeSet = _.uniq(_.map(product?.variants,'size'));
+    return sizeSet;
+  }, [product]);
+
   return (
     <>
     <div className="flex flex-col md:flex-row px-10 pt-2 gap-10">
@@ -88,7 +117,7 @@ const ProductDetails = () => {
               { 
                 product?.productResources?.map((item, index) => {
                   return (
-                    <button
+                    <button key={index}
                       onClick={() => setImage(item?.url)}
                       className="p-2 rounded-lg w-fit"
                     >
@@ -109,7 +138,7 @@ const ProductDetails = () => {
               className="h-full w-full max-h-[520px] bg-cover 
                     bg-center border rounded-lg cursor-pointer 
                     object-cover"
-              alt={product?.title}
+              alt={product?.name}
             />
           </div>
         </div>
@@ -117,8 +146,8 @@ const ProductDetails = () => {
       <div className="w-[60%] px-10">
         {/* Product Description */}
         <Breadcrumb links={BreadCrumbLinks} />
-        <p className="text-3xl pt-5 pb-2">{product?.title}</p>
-        <Rating rating={product?.rating || 0} />
+        <p className="text-3xl pt-5 pb-2">{product?.name}</p>
+        <Rating rating={product?.rating} />
 
         {/* Price Tag */}
         <p className="text-xl bold py-2">${product?.price}</p>
@@ -129,11 +158,11 @@ const ProductDetails = () => {
             <Link className="text-sm text-gray-500 hover:text-black" to={'https://en.wikipedia.org/wiki/Clothing_sizes'} target='_blank'> {"Size Guide"}</Link>
           </div>
           <span className="mt-2">
-            <SizeFilter sizes={product?.size} hideTitle/>
+            <SizeFilter sizes={sizes} hideTitle multi={false}/>
           </span>
           <div>
             <p className="text-lg bold pb-1">Colors Available</p>
-            <ProductColor colors={product?.color} />
+            <ProductColor colors={colors} />
           </div>
           <div className="flex pt-6">
           <button className='bg-black rounded-lg hover:bg-gray-700'><div className='flex h-[42px] rounded-lg w-[150px] px-2 items-center justify-center bg-black text-white hover:bg-gray-700'><svg width="17" height="16" className='' viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -172,7 +201,7 @@ const ProductDetails = () => {
     <div className='grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 gap-10 pt-8 px-10 pb-20'>
                 {similarProducts?.map((item, index) => {
                     return(
-                        <ProductCard key={index} {...item} rating={item?.rating}/>
+                        <ProductCard key={index} {...item} />
                     ) 
                 })}
                 {!similarProducts?.length && <p>No Products Found!</p>}

@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/category")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 public class CategoryController {
 
     @Autowired

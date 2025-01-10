@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import SvgFavourite from '../../Components/common/SvgFavourite';
 import { Link } from 'react-router-dom';
 
-const ProductCard = ({id, title, description, price, brand,rating, thumbnail,slug }) => {
+const ProductCard = ({id, title, description, price, brand,rating, thumbnail,slug}) => {
   const [isFilled, setIsFilled] = useState(false);
 
   const toggleFill = () => setIsFilled(!isFilled);

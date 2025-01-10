@@ -14,7 +14,7 @@ export const getAllProducts = async (id, typeId) => {
     try {
 
         const result = await axios(url, {
-            method: "GET"
+            method:"GET"
         });
         
         return result?.data;
@@ -28,12 +28,12 @@ export const getAllProducts = async (id, typeId) => {
 
 export const getProductBySlug = async (slug)=> {
 
-    const url = API_BASE_URL + API_URLS.GET_PRODUCTS + `?slug=${slug}`;
+    const url =  API_BASE_URL + API_URLS.GET_PRODUCTS + `?slug=${slug}`;
 
     try{
 
-        const result = await axios(url,{
-            method: "GET"
+        const result = await axios(url, {
+            method:"GET"
         
         });
 
