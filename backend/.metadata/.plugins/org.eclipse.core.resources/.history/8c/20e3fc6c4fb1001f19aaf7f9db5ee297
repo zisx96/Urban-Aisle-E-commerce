@@ -1,0 +1,11 @@
+spring.application.name=UrbanAisle
+
+server.port=8484
+server.servlet.context-path=/api
+
+spring.datasource.url=jdbc:mysql:///spring_ecommerce
+spring.datasource.username:root
+spring.datasource.password:root@098
+
+spring.jpa.hibernate.ddl-auto=update
+

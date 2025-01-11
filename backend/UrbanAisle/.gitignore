@@ -79,11 +79,6 @@ Thumbs.db
 /*.sqlite
 /*.sqlite3
 
-# Exclude application properties (manually manage these)
-/src/main/resources/application.properties
-
-# Ignore environment-specific properties
-/src/main/resources/application-*.properties
 
 # Exclude sensitive files (keys, credentials, etc.)
 /src/main/resources/*.key

@@ -1,0 +1,5 @@
+package com.urbanaisle.store.entities;
+
+public class CategoryType {
+
+}

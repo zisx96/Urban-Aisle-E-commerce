@@ -1,0 +1,5 @@
+package com.urbanaisle.store.repositories;
+
+public interface ProductRepository {
+
+}

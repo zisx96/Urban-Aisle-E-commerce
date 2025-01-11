@@ -1,0 +1,8 @@
+package com.urbanaisle.store.entities;
+
+import jakarta.persistence.Entity;
+
+@Entity
+@Table(name= "products")
+public class Product {
+}

@@ -1,0 +1,8 @@
+package com.urbanaisle.store.services;
+
+import com.urbanaisle.store.entities.Product;
+
+public interface ProductService {
+	
+	public Product addProduct(Product product);
+}
