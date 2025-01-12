@@ -64,8 +64,15 @@ public class RegistrationService {
 
         }
         catch (Exception e){
-
+            System.out.println(e.getMessage());
             throw  new ServerErrorException(e.getMessage(),e.getCause());
         }
+    }
+
+    public void verifyUser(String username) {
+
+        User user = userDetailRepository.findByEmail(username);
+        user.setEnabled(true);
+        userDetailRepository.save(user);
     }
 }
