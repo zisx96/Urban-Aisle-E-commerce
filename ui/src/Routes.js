@@ -5,6 +5,9 @@ import App from "./App";
 import ProductListPage from "./Pages/ProductListPage/ProductListPage";
 import ProductDetails from "./Pages/ProductDetailPage/ProductDetails";
 import { loadProductBySlug } from "./routes/products";
+import AuthenticationWrapper from "./Pages/AuthenticationWrapper";
+import Login from "./Pages/Login/Login";
+import Register from "./Pages/Register/Register";
 
 
 export const router = createBrowserRouter([
@@ -33,6 +36,20 @@ export const router = createBrowserRouter([
                 path:"/product/:slug",
                 loader: loadProductBySlug,
                 element: <ProductDetails />
+            }
+        ]
+    },
+    {
+        path:"/v1/",
+        element: <AuthenticationWrapper />,
+        children:[
+            {
+                path:"login",
+                element:<Login />
+            },
+            {
+                path:"register",
+                element:<Register />
             }
         ]
     }
