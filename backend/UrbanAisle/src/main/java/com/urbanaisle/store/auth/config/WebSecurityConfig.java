@@ -11,6 +11,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -42,7 +43,10 @@ public class WebSecurityConfig {
                 .requestMatchers(HttpMethod.GET,"/api/products",
                         "/api/category").permitAll()
                 .requestMatchers(HttpMethod.POST,"/api/auth/**").permitAll()
+                        .requestMatchers("/oauth2/success").permitAll()
                 .anyRequest().authenticated())
+                .oauth2Login((oauth2Login)-> oauth2Login.defaultSuccessUrl("/oauth2/success"))
+                .sessionManagement((session)-> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .addFilterBefore(new JWTAuthenticationFilter(jwtTokenHelper, userDetailsService),
                         UsernamePasswordAuthenticationFilter.class);
 

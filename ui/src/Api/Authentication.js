@@ -17,3 +17,37 @@ export const loginAPI = async (body) => {
         throw new Error(e);
     }
 }
+
+export const registerAPI = async (body) => {
+
+    const url = API_BASE_URL + '/api/auth/register';
+
+    try{
+        const response = await axios(url,{
+            method: "POST",
+            data:body
+        });
+
+        return response?.data;
+    }
+    catch(e){
+        throw new Error(e);
+    }
+}
+
+export const verifyAPI = async (body) => {
+
+    const url = API_BASE_URL + '/api/auth/verify';
+
+    try{
+        const response = await axios(url,{
+            method: "POST",
+            data:body
+        });
+
+        return response?.data;
+    }
+    catch(e){
+        throw new Error(e);
+    }
+}
