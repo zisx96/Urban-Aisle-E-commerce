@@ -1,11 +1,9 @@
 package com.urbanaisle.store.auth.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.urbanaisle.store.entities.Address;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -53,6 +51,10 @@ public class User implements UserDetails {
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(name = "AUTH_USER_AUTHORITY",joinColumns = @JoinColumn(referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(referencedColumnName = "id"))
     private List<Authority> authorities;
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<Address> addressList;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import com.urbanaisle.store.repositories.ProductRepository;
 
+import javax.crypto.BadPaddingException;
+
 @Slf4j
 @Service
 public class ProductService implements IProductService {
@@ -89,6 +91,12 @@ public class ProductService implements IProductService {
 				.orElseThrow(()-> new ResourceNotFoundException("Product not Found"));
 
 		return prodRepo.save(productMapper.mapToProduct(productDto));
+	}
+
+	@Override
+	public Product fetchProductById(UUID id) throws Exception {
+
+		return prodRepo.findById(id).orElseThrow(BadPaddingException::new);
 	}
 
 }
