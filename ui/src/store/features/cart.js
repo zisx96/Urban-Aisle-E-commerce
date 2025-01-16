@@ -23,28 +23,21 @@ const cartSlice = createSlice({
         updateQuantity:(state,action) =>{
             return {
                 ...state,
-                cart: state?.cart?.map((item)=>{
+                cart: state?.cart?.map((item) =>{
                     if(item?.variant?.id === action?.payload?.variant_id){
                         return {
                             ...item,
-                            quantity:action?.payload?.quantity,
-                            subTotal: action?.payload?.quantity * item.price
+                            quantity:action?.payload?.quantity
                         }
                     }
                     return item;
                 })
             };
-        },
-        deleteCart : (state,action)=>{
-            return {
-                ...state,
-                cart:[]
-            }
         }
     }
 })
 
-export const { addToCart, removeFromCart, updateQuantity, deleteCart } = cartSlice?.actions;
+export const { addToCart, removeFromCart, updateQuantity } = cartSlice?.actions;
 
 export const countCartItems = (state) => state?.cartState?.cart?.length;
 export const selectCartItems = (state) => state?.cartState?.cart ?? []

@@ -9,6 +9,7 @@ import AuthenticationWrapper from "./Pages/AuthenticationWrapper";
 import Login from "./Pages/Login/Login";
 import Register from "./Pages/Register/Register";
 import OAuth2Login from "./Pages/OAuth2Login/OAuth2Login";
+import Cart from "./Pages/Cart/Cart";
 
 
 export const router = createBrowserRouter([
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
                 path:"/product/:slug",
                 loader: loadProductBySlug,
                 element: <ProductDetails />
+            },
+            {
+                path:'/cart-items',
+                element: <Cart />
             }
         ]
     },
