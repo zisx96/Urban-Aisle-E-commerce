@@ -27,7 +27,8 @@ const cartSlice = createSlice({
                     if(item?.variant?.id === action?.payload?.variant_id){
                         return {
                             ...item,
-                            quantity:action?.payload?.quantity
+                            quantity:action?.payload?.quantity,
+                            subTotal: action?.payload?.quantity * item?.price
                         }
                     }
                     return item;

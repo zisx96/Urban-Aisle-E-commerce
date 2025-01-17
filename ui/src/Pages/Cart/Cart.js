@@ -1,8 +1,11 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCartItems } from '../../store/features/cart';
 import NumberInput from '../../Components/NumberInput/NumberInput';
 import { updateItemToCartAction } from '../../store/actions/cartAction';
+import DeleteIcon from '../../Components/common/DeleteIcon'
+import Modal from 'react-modal';
+import {customStyles} from '../../styles/model';
 
 const heads = [
     "Product Details","Price","Quantity","Shipping","Subtotal","Action"
@@ -11,6 +14,8 @@ const heads = [
 const Cart = () => {
 
     const dispatch = useDispatch();
+
+    const [modalIsOpen, setModelIsOpen] = useState(false);
 
     const cartItems = useSelector(selectCartItems);
 
@@ -25,9 +30,12 @@ const Cart = () => {
         
     },[dispatch]);
 
-
+    const deleteProduct = useCallback((productId,variantId) => {
+        setModelIsOpen(true);
+    },[])
 
   return (
+    <>
     <div className='p-8'>
         <p className='text-xl text-black p-4'>Shopping Bag</p>
         <table className='w-full text-lg '>
@@ -67,6 +75,13 @@ const Cart = () => {
                                 <td className='text-center text-sm text-gray-500'>
                                     FREE
                                 </td>
+                                <td>
+                                    <p className='text-center text-sm text-gray-500'>${item?.subTotal}</p>
+                                </td>
+
+                                <td>
+                                    <button onClick={() => deleteProduct(item?.id, item?.variant?.id)} className='flex justify-center items-center w-full'><DeleteIcon /></button>
+                                </td>
                             </tr>
                         )
                     })
@@ -74,6 +89,19 @@ const Cart = () => {
             </tbody>
         </table>
     </div>
+    <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={()=> setModelIsOpen(false)}
+        style={customStyles}
+        contentLabel="Remove Item"
+      >
+        <p>Are you sure you wan't to remove this item ?</p>
+        <div className='flex justify-between p-4'>
+            <button className='bg-black text-white w-[80px] h-[48px] border rounded-lg hover:bg-gray-500'>Cancel</button>
+            <button className='bg-black text-white w-[80px] h-[48px] border rounded-lg hover:bg-gray-500'>Remove</button>
+        </div>
+      </Modal>
+    </>
   )
 }
 
