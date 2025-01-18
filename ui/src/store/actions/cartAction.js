@@ -1,13 +1,11 @@
-import { addToCart, updateQuantity } from "../features/cart"
+import { addToCart, removeFromCart, updateQuantity } from "../features/cart"
 
 export const addItemToCartAction= (productItem)=>{
 
     return (dispatch,state) =>{
         dispatch(addToCart(productItem));
 
-        const {cartState} = state();
-
-        localStorage.setItem('cart', JSON.stringify(cartState?.cart))
+        updateLocalStorage(state);
         
     }
 }
@@ -20,7 +18,19 @@ export const updateItemToCartAction = (productItem) => {
             quantity: productItem?.quantity
         }))
 
-        const {cartState} = state();
-        localStorage.setItem('cart', JSON.stringify(cartState?.cart))
+        updateLocalStorage(state);
     }
+}
+
+export const deleteItemFromCartAction = (payload) => {
+
+    return (dispatch,state)=> {
+        dispatch(removeFromCart(payload));
+        updateLocalStorage(state);
+    }
+}
+
+const updateLocalStorage = (state) => {
+    const {cartState} = state();
+    localStorage.setItem('cart',JSON.stringify(cartState?.state));
 }
