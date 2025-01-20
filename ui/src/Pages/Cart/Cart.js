@@ -7,7 +7,8 @@ import DeleteIcon from '../../Components/common/DeleteIcon'
 import Modal from 'react-modal';
 import {customStyles} from '../../styles/model';
 import { isTokenValid } from '../../Utils/jwt-helper';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import emptyCart from '../../assets/img/empty_cart.png'
 
 const heads = [
     "Product Details","Price","Quantity","Shipping","Subtotal","Action"
@@ -22,6 +23,8 @@ const Cart = () => {
     const cartItems = useSelector(selectCartItems);
 
     const [deleteItem, setDeleteItem] = useState({});
+
+    const navigate = useNavigate();
 
     const onChangeQuantity = useCallback((value,productId, variantId) => {
         console.log("Received", value);
@@ -70,6 +73,8 @@ const Cart = () => {
   return (
     <>
     <div className='p-8'>
+        {cartItems?.length > 0 && 
+        <>
         <p className='text-xl text-black p-4'>Shopping Bag</p>
         <table className='w-full text-lg '>
             <thead className='text-lg bg-black text-white uppercase'>
@@ -117,7 +122,7 @@ const Cart = () => {
                                     <button onClick={() => deleteProduct(item?.productId, item?.variant?.id)} className='flex justify-center items-center w-full'><DeleteIcon /></button>
                                 </td>
                                 </>
-                                <hr className='h-4 bg-gray-950'></hr>
+                                <div className='h-4 bg-gray-950'></div>
                             </tr>
                         )
                     })
@@ -144,11 +149,22 @@ const Cart = () => {
                 <div className='flex gap-8 text-lg mt-2 font-bold'>
                     <p className='w-[100px]'>Grand Total</p> <p>${subTotal}</p>
                 </div>
-                <hr className='h-[2px] bg-slate-400 mt-2'></hr>
-                {isLoggedIn && <button className='w-full items-center h-[48px] bg-black text-white border rounded-lg mt-2 hover:bg-gray-500'>Checkout</button> }
-                {!isLoggedIn && <Link to={"/v1/login"}> <button className='w-full items-center h-[48px] bg-black text-white border rounded-lg mt-2 hover:bg-gray-500'>Login To Checkout</button> </Link>}
+                <div className='h-[2px] bg-slate-400 mt-2'></div>
+                {isLoggedIn && <button className='w-full items-center h-[48px] bg-black text-white border rounded-lg mt-2 hover:bg-gray-500' onClick={() => navigate('/checkout')}>Checkout</button> }
+                {!isLoggedIn &&  <Link to={"/v1/login"}> <button className='w-full items-center h-[48px] bg-black text-white border rounded-lg mt-2 hover:bg-gray-500'>Login To Checkout</button> </Link>} 
             </div>
         </div>
+        </>}
+        {
+            !cartItems?.length && 
+            <div className='w-full items-center text-center'>
+                <div className='flex justify-center'><img src={emptyCart} alt='emptyCart_image' className='w-[240px] h-[240px]' /></div>
+                <p className='text-3xl font-bold mb-6'>
+                    Cart Empty !
+                </p>
+                <div><Link to={'/'}><button className='w-[180px]  items-center h-[48px] bg-black text-white border rounded-lg mt-2 hover:bg-gray-500'>Continue Shopping...</button></Link></div>
+            </div>
+        }
     </div>
     <Modal
         isOpen={modalIsOpen}

@@ -25,6 +25,7 @@ public class AddressService {
         User user = (User) userDetailsService.loadUserByUsername(principal.getName());
 
         Address address = Address.builder()
+                .name(addressDto.getName())
                 .street(addressDto.getStreet())
                 .city(addressDto.getCity())
                 .state(addressDto.getState())

@@ -32,5 +32,5 @@ export const deleteItemFromCartAction = (payload) => {
 
 const updateLocalStorage = (state) => {
     const {cartState} = state();
-    localStorage.setItem('cart',JSON.stringify(cartState?.state));
+    localStorage.setItem('cart',JSON.stringify(cartState?.cart));
 }

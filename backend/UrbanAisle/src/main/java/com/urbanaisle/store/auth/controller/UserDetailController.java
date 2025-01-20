@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "Authorization")
 @RequestMapping("/api/user")
 public class UserDetailController {
 

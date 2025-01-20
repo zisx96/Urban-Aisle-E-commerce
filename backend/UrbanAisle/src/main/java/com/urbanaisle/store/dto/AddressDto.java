@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class AddressDto {
 
+    private String name;
     private String street;
     private String city;
     private String state;
