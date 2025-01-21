@@ -26,6 +26,7 @@ export const logOut = () => {
 }
 
 export const getToken = ()=>{
-    const token = localStorage.getItem('authToken');
-    return token;
+    
+    return localStorage.getItem('authToken');
+    
 }

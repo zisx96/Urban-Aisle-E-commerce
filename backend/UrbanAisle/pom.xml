@@ -98,6 +98,12 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.paypal.sdk</groupId>
+			<artifactId>paypal-rest-sdk</artifactId>
+			<version>1.14.0</version> <!-- Use the latest version -->
+		</dependency>
+
 	</dependencies>
 
 	<build>

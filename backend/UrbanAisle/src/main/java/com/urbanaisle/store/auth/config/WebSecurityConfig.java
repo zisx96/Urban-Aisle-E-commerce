@@ -1,7 +1,6 @@
 package com.urbanaisle.store.auth.config;
 
-import com.urbanaisle.store.auth.exceptions.RESTAuthenticationEntryPoint;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,16 +11,12 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
@@ -49,10 +44,11 @@ public class WebSecurityConfig {
                         "/api/category").permitAll()
                 .requestMatchers(HttpMethod.POST,"/api/auth/**").permitAll()
                         .requestMatchers("/oauth2/success").permitAll()
-                .anyRequest().authenticated())
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .anyRequest().authenticated())
                 .oauth2Login((oauth2Login)-> oauth2Login.defaultSuccessUrl("/oauth2/success"))
-        //      .sessionManagement((session)-> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
-                .exceptionHandling((exception)-> exception.authenticationEntryPoint(new RESTAuthenticationEntryPoint()))
+
+      //        .exceptionHandling((exception)-> exception.authenticationEntryPoint(new RESTAuthenticationEntryPoint()))
                 .addFilterBefore(new JWTAuthenticationFilter(jwtTokenHelper, userDetailsService),
                         UsernamePasswordAuthenticationFilter.class);
 
