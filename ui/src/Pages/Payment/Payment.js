@@ -1,8 +1,26 @@
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 import React from 'react'
+import CheckoutPayment from './CheckoutPayment';
 
-const Payment = () => {
+const stripePromise = loadStripe('');
+
+const Payment = ({props}) => {
+
+  const options = {
+
+    mode: 'payment',
+    amount: 10,
+    currency: 'usd',
+    apppearance: {
+      theme: 'flat'
+    },
+  };
+
   return (
-    <div></div>
+    <Elements stripe= {stripePromise} options={options}>
+      <CheckoutPayment {...props}/>
+    </Elements>
   )
 }
 

@@ -1,6 +1,8 @@
 package com.urbanaisle.store.services;
 
+import com.urbanaisle.store.auth.dto.OrderResponse;
 import com.urbanaisle.store.auth.entities.User;
+import com.urbanaisle.store.auth.services.PaymentIntentService;
 import com.urbanaisle.store.dto.OrderDto;
 import com.urbanaisle.store.dto.OrderItemDto;
 import com.urbanaisle.store.entities.*;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class OrderService {
@@ -27,8 +30,11 @@ public class OrderService {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private PaymentIntentService paymentIntentService;
+
     @Transactional
-    public Order createOrder(OrderDto orderDto, Principal principal) throws Exception {
+    public OrderResponse createOrder(OrderDto orderDto, Principal principal) throws Exception {
 
         User user = (User) userDetailsService.loadUserByUsername(principal.getName());
 
@@ -68,10 +74,20 @@ public class OrderService {
         payment.setPaymentDate(new Date());
         payment.setOrder(order);
         payment.setAmount(order.getTotalAmount());
-        payment.setPaymentMethod("");
+        payment.setPaymentMethod(order.getPaymentMethod());
         order.setPayment(payment);
+        Order saveOrder = orderRepository.save(order);
 
-        return orderRepository.save(order);
+        OrderResponse orderResponse = OrderResponse.builder()
+                .paymentMethod(orderDto.getPaymentMethod())
+                .orderId(saveOrder.getId())
+                .build();
+
+        if(Objects.equals(orderDto.getPaymentMethod(), "CARD")){
+            orderResponse.setCredentials(paymentIntentService.createPaymentIntent(order));
+        }
+
+        return orderResponse;
 
     }
 

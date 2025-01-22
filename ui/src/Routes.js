@@ -13,6 +13,7 @@ import Cart from "./Pages/Cart/Cart";
 import Account from "./Pages/Account/Account";
 import PRoute from "./Components/ProtectedRoute/PRoute";
 import Checkout from "./Pages/Checkout/Checkout";
+import Payment from "./Pages/Payment/Payment";
 
 
 export const router = createBrowserRouter([

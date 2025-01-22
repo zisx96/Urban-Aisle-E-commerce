@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectCartItems } from '../../store/features/cart'
 import { setLoading } from '../../store/features/common'
 import { fetctUserDetails } from '../../Api/Userinfo'
+import Payment from '../Payment/Payment'
+import { useNavigate } from 'react-router-dom'
 
 const Checkout = () => {
 
@@ -12,12 +14,16 @@ const Checkout = () => {
 
     const [userInfo, setUserInfo] = useState([]);
 
+    const navigate = useNavigate();
+
+    const [paymentMethod,setPaymentMethod] = useState('');
+
     const subTotal = useMemo(() => {
             let value = 0;
             cartItems?.forEach(element =>{
                 value += element?.subTotal
             });
-            return value;
+            return value?.toFixed(2);
         },[cartItems]);
 
     useEffect(() => {
@@ -30,7 +36,7 @@ const Checkout = () => {
             dispatch(setLoading(false));
         })
         
-    },[dispatch])
+    },[dispatch]);
 
   return (
     <div className='p-8 flex '>
@@ -68,20 +74,21 @@ const Checkout = () => {
                 <p className='font-bold'>Payment Method</p>
                 <div className='mt-4 flex flex-col gap-2'>
                     <div className='flex gap-2'>
-                        <input type='radio' name='payment' />
+                        <input type='radio' name='payment' value={'CARD'} onChange={() => setPaymentMethod('CARD')}/>
                         <p>Credit/Debit</p>
                     </div>
                     <div className='flex gap-2'>
-                        <input type='radio' name='payment' />
+                        <input type='radio' name='payment' value={'COD'} onChange={() => setPaymentMethod('COD')}/>
                         <p>UPI/Wallet</p>
                     </div>
                     <div className='flex gap-2'>
-                        <input type='radio' name='payment' />
+                        <input type='radio' name='payment' value={'UPI'} onChange={() => setPaymentMethod('UPI')}/>
                         <p>Cash On Delivery</p>
                     </div>
                 </div>    
             </div>
-            <button className='bg-black mt-6 text-white w-[120px] h-[48px] border rounded-lg hover:bg-gray-500'>Pay Now</button>
+            {paymentMethod === 'CARD' && <Payment userId={userInfo?.id} addressId={userInfo?.addressList?.[0]?.id} />}
+            {paymentMethod !== 'CARD' && <button onClick={()=> navigate('/payment')} className='bg-black mt-6 text-white w-[120px] h-[48px] border rounded-lg hover:bg-gray-500'>Pay Now</button>}
         </div>
         <div className='w-[35%] h-[35%] p-4 flex flex-col gap-4 border rounded-lg border-gray-500'>
             <p className='font-bold'>Order Summary</p>

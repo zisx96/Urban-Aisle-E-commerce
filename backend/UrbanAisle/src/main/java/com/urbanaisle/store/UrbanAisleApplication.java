@@ -1,6 +1,6 @@
 package com.urbanaisle.store;
 
-
+import com.stripe.model.PaymentIntent;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;

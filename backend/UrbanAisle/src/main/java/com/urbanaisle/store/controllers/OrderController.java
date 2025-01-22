@@ -1,7 +1,11 @@
 package com.urbanaisle.store.controllers;
 
+import com.stripe.model.PaymentIntent;
+import com.urbanaisle.store.auth.dto.OrderResponse;
+import com.urbanaisle.store.auth.services.PaymentIntentService;
 import com.urbanaisle.store.dto.OrderDto;
 import com.urbanaisle.store.entities.Order;
+import com.urbanaisle.store.entities.Payment;
 import com.urbanaisle.store.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.jaxb.SpringDataJaxb;
@@ -10,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Objects;
 
 @RestController
 @CrossOrigin
@@ -19,12 +24,15 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private PaymentIntentService paymentIntentService;
+
     @PostMapping
-    public ResponseEntity<Order> createOrder(@RequestBody OrderDto orderDto, Principal principal) throws Exception {
+    public ResponseEntity<?> createOrder(@RequestBody OrderDto orderDto, Principal principal) throws Exception {
 
-        Order order = orderService.createOrder(orderDto, principal);
+        OrderResponse orderResponse = orderService.createOrder(orderDto,principal);
 
-        return new ResponseEntity<>(order, HttpStatus.CREATED);
+        return new ResponseEntity<>(orderResponse,HttpStatus.OK);
     }
 
 }

@@ -98,11 +98,13 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/com.stripe/stripe-java -->
 		<dependency>
-			<groupId>com.paypal.sdk</groupId>
-			<artifactId>paypal-rest-sdk</artifactId>
-			<version>1.14.0</version> <!-- Use the latest version -->
+			<groupId>com.stripe</groupId>
+			<artifactId>stripe-java</artifactId>
+			<version>28.2.0</version>
 		</dependency>
+
 
 	</dependencies>
 
