@@ -11,7 +11,7 @@ const Payment = ({props}) => {
 
     mode: 'payment',
     amount: 10,
-    currency: 'usd',
+    currency: 'inr',
     apppearance: {
       theme: 'flat'
     },

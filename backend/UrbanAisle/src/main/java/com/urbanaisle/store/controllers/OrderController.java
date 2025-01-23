@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Map;
 import java.util.Objects;
 
 @RestController
@@ -33,6 +34,13 @@ public class OrderController {
         OrderResponse orderResponse = orderService.createOrder(orderDto,principal);
 
         return new ResponseEntity<>(orderResponse,HttpStatus.OK);
+    }
+
+    @PostMapping("/update-payment")
+    public ResponseEntity<?> updatePaymentStatus(@RequestBody Map<String,String> request){
+        Map<String,String> response = orderService.updateStatus(request.get("paymentIntent"),request.get("status"));
+
+        return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
 }

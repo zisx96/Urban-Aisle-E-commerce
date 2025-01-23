@@ -14,6 +14,8 @@ import Account from "./Pages/Account/Account";
 import PRoute from "./Components/ProtectedRoute/PRoute";
 import Checkout from "./Pages/Checkout/Checkout";
 import Payment from "./Pages/Payment/Payment";
+import ConfirmPayment from "./Pages/ConfirmPayment/ConfirmPayment";
+import OrderConfirmed from "./Pages/OrderConfirmed/OrderConfirmed";
 
 
 export const router = createBrowserRouter([
@@ -54,6 +56,10 @@ export const router = createBrowserRouter([
             {
                 path:'/checkout',
                 element: <PRoute><Checkout /></PRoute>
+            },
+            {
+                path:'/orderConfirmed',
+                element: <OrderConfirmed />
             }
         ]
     },
@@ -75,6 +81,10 @@ export const router = createBrowserRouter([
     {
         path:'/oauth2/callback',
         element:<OAuth2Login />
+    },
+    {
+        path:'/confirmPayment',
+        element: <ConfirmPayment />
     }
     
 ]);

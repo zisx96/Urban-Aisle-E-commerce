@@ -24,6 +24,7 @@ public class PaymentIntentService {
                 .setAmount(100L)
                 .setCurrency("inr")
                 .putAllMetadata(metaData)
+                .setDescription("Test Payment ")
                 .setAutomaticPaymentMethods(
                         PaymentIntentCreateParams.AutomaticPaymentMethods.builder().setEnabled(true).build()
                 )

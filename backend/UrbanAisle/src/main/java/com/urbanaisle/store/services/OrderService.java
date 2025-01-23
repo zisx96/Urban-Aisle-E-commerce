@@ -1,5 +1,6 @@
 package com.urbanaisle.store.services;
 
+import com.stripe.model.PaymentIntent;
 import com.urbanaisle.store.auth.dto.OrderResponse;
 import com.urbanaisle.store.auth.entities.User;
 import com.urbanaisle.store.auth.services.PaymentIntentService;
@@ -14,9 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 public class OrderService {
@@ -91,4 +90,31 @@ public class OrderService {
 
     }
 
+    public Map<String,String> updateStatus(String paymentIntentId, String status) {
+
+        try{
+            PaymentIntent paymentIntent = PaymentIntent.retrieve(paymentIntentId);
+            if(paymentIntent != null && paymentIntent.getStatus().equals("succeeded")){
+                String orderId = paymentIntent.getMetadata().get("orderId");
+                Order order = orderRepository.findById(UUID.fromString(orderId)).orElseThrow(BadRequestException::new);
+                Payment payment = order.getPayment();
+                payment.setPaymentStatus(PaymentStatus.COMPLETED);
+                payment.setPaymentMethod(paymentIntent.getPaymentMethod());
+                order.setPaymentMethod(paymentIntent.getPaymentMethod());
+                order.setPayment(payment);
+                Order savedOrder = orderRepository.save(order);
+                Map<String,String> map = new HashMap<>();
+                map.put("orderId",String.valueOf(savedOrder.getId()));
+                return map;
+            }
+            else {
+
+                throw new IllegalArgumentException("Payment not found or missing metadata");
+            }
+        }catch (Exception e){
+
+            throw new IllegalArgumentException("Payment not found or missing metadata");
+        }
+
+    }
 }

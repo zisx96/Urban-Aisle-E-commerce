@@ -18,3 +18,20 @@ export const placeOrderApi = async (data) => {
         throw new Error(err);
     }
 }
+
+export const confirmPaymentApi = async (data) => {
+
+    const url = API_BASE_URL + '/api/order/update-payment';
+
+    try{
+        const response = await axios(url,{
+            method:"POST",
+            data:data,
+            headers: getHeaders()
+        });
+        return response?.data;
+    }
+    catch(err){
+        throw new Error(err);
+    }
+}
