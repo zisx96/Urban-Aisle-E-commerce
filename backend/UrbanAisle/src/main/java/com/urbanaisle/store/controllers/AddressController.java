@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin
@@ -25,6 +26,14 @@ public class AddressController {
         Address address = addressService.createAddress(addressDto,principal);
 
         return new ResponseEntity<>(address,HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteAddress(@PathVariable UUID id){
+
+        addressService.deleteAddress(id);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
