@@ -34,11 +34,17 @@ export const userSlice = createSlice({
                     addressList: state?.userInfo?.addressList?.filter(address=> address?.id !== action?.payload)
                 }
             }
+        },
+        loadOrders: (state,action)=> {
+            return{
+                ...state,
+                orders:action?.payload
+            }
         }
     }
 });
 
-export const { loadUserInfo, saveAddress, removeAddress } = userSlice?.actions;
-
+export const { loadUserInfo, saveAddress, removeAddress, loadOrders } = userSlice?.actions;
+export const selectAllOrders = (state) => state?.userState?.orders ?? [];
 export const selectUserInfo = (state) => state?.userState?.userInfo ?? {};
 export default userSlice?.reducer;

@@ -4,7 +4,9 @@ import com.stripe.model.PaymentIntent;
 import com.urbanaisle.store.auth.dto.OrderResponse;
 import com.urbanaisle.store.auth.entities.User;
 import com.urbanaisle.store.auth.services.PaymentIntentService;
+import com.urbanaisle.store.dto.OrderDetails;
 import com.urbanaisle.store.dto.OrderDto;
+import com.urbanaisle.store.dto.OrderItemDetails;
 import com.urbanaisle.store.dto.OrderItemDto;
 import com.urbanaisle.store.entities.*;
 import com.urbanaisle.store.repositories.OrderRepository;
@@ -101,6 +103,7 @@ public class OrderService {
                 payment.setPaymentStatus(PaymentStatus.COMPLETED);
                 payment.setPaymentMethod(paymentIntent.getPaymentMethod());
                 order.setPaymentMethod(paymentIntent.getPaymentMethod());
+                order.setOrderStatus(OrderStatus.IN_PROGRESS);
                 order.setPayment(payment);
                 Order savedOrder = orderRepository.save(order);
                 Map<String,String> map = new HashMap<>();
@@ -116,5 +119,38 @@ public class OrderService {
             throw new IllegalArgumentException("Payment not found or missing metadata");
         }
 
+    }
+
+    public List<OrderDetails> getOrderByUser(String name) {
+
+        User user = (User) userDetailsService.loadUserByUsername(name);
+        List<Order> orders = orderRepository.findByUser(user);
+
+        return orders.stream().map(order -> {
+            return OrderDetails.builder()
+                    .id(order.getId())
+                    .orderDate(order.getOrderDate())
+                    .orderStatus(order.getOrderStatus())
+                    .shipmentNumber(order.getShipmentTrackingNumber())
+                    .address(order.getAddress())
+                    .totalAmount(order.getTotalAmount())
+                    .orderItemDetailsList(getItemDetails(order.getOrderItemList()))
+                    .expectedDeliveryDate(order.getExpectedDelivery())
+                    .build();
+        }).toList();
+
+    }
+
+    private List<OrderItemDetails> getItemDetails(List<OrderItem> orderItemList) {
+
+        return orderItemList.stream().map(orderItem -> {
+            return OrderItemDetails.builder()
+                    .id(orderItem.getId())
+                    .itemPrice(orderItem.getItemPrice())
+                    .product(orderItem.getProduct())
+                    .productVariantId(orderItem.getProductVariantId())
+                    .quantity(orderItem.getQuantity())
+                    .build();
+        }).toList();
     }
 }

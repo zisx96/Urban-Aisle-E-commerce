@@ -3,6 +3,7 @@ package com.urbanaisle.store.controllers;
 import com.stripe.model.PaymentIntent;
 import com.urbanaisle.store.auth.dto.OrderResponse;
 import com.urbanaisle.store.auth.services.PaymentIntentService;
+import com.urbanaisle.store.dto.OrderDetails;
 import com.urbanaisle.store.dto.OrderDto;
 import com.urbanaisle.store.entities.Order;
 import com.urbanaisle.store.entities.Payment;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -41,6 +43,15 @@ public class OrderController {
         Map<String,String> response = orderService.updateStatus(request.get("paymentIntent"),request.get("status"));
 
         return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<List<OrderDetails>> getOrdersByUser(Principal principal){
+
+        List<OrderDetails> order = orderService.getOrderByUser(principal.getName());
+
+        return new ResponseEntity<>(order,HttpStatus.OK);
+
     }
 
 }

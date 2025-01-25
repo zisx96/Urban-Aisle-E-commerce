@@ -3,7 +3,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import React from 'react'
 import CheckoutPayment from './CheckoutPayment';
 
-const stripePromise = loadStripe('');
+const stripePromise = loadStripe('Your Stripe API');
 
 const Payment = ({props}) => {
 
