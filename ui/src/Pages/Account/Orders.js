@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setLoading } from '../../store/features/common';
-import { fetchOrderApi } from '../../Api/Userinfo';
+import { cancelOrderApi, fetchOrderApi } from '../../Api/Userinfo';
 import { loadOrders, selectAllOrders } from '../../store/features/user';
 import moment from 'moment';
 import Timeline from '../../Components/Timeline/Timeline'
@@ -59,6 +59,17 @@ const Orders = () => {
     const value = event?.target?.value;
     setSelectedFilter(value);
   },[]);
+
+  const onCancelOrder = useCallback((id) => {
+    dispatch(setLoading(true));
+    cancelOrderApi(id).then(res => {
+      dispatch(cancelOrderApi(id));
+    }).catch(err => {
+
+    }).finally(() => {
+      dispatch(setLoading(false));
+    })
+  }, [dispatch])
 
   return (
     <div>
@@ -121,8 +132,8 @@ const Orders = () => {
                         {
                           getStepCount(order?.orderStatus) <= 2 && 
 
-                          <button onClick={() => setSelectedOrder('')} 
-                            className='bg-black text-white h-[42px] w-[120px] rounded'>
+                          <button onClick={() => onCancelOrder(order?.id)} 
+                            className='bg-black text-white h-[42px] w-[120px] rounded-lg'>
                             Cancel
                           </button>
                         }

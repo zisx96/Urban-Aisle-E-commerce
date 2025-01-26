@@ -153,4 +153,19 @@ public class OrderService {
                     .build();
         }).toList();
     }
+
+    public void cancelOrder(UUID id, Principal principal) {
+
+        User user = (User) userDetailsService.loadUserByUsername(principal.getName());
+        Order order = orderRepository.findById(id).get();
+        if(null != order && order.getUser().getId().equals(user.getId())){
+
+            order.setOrderStatus(OrderStatus.CANCELLED);
+            orderRepository.save(order);
+        }
+        else {
+
+            new RuntimeException("Invalid Request");
+        }
+    }
 }

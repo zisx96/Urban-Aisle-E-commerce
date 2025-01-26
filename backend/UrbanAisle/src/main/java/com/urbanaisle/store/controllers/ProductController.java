@@ -5,6 +5,7 @@ import com.urbanaisle.store.dto.ProductDto;
 import com.urbanaisle.store.entities.Product;
 import com.urbanaisle.store.services.ProductService;
 import io.micrometer.common.util.StringUtils;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping
-    public ResponseEntity<List<ProductDto>> getAllProducts(@RequestParam(required = false) UUID categoryId, @RequestParam(required = false) UUID typeId, @RequestParam(required = false) String slug ){
+    public ResponseEntity<List<ProductDto>> getAllProducts(@RequestParam(required = false) UUID categoryId, @RequestParam(required = false, name = "typeId", value = "typeId") UUID typeId, @RequestParam(required = false) String slug, HttpServletResponse response){
         List<ProductDto> productList = new ArrayList<>();
         if(StringUtils.isNotBlank(slug)){
             ProductDto productDto = productService.getProductBySlug(slug);
@@ -32,7 +33,7 @@ public class ProductController {
         else{
             productList = productService.getAllProducts(categoryId, typeId);
         }
-
+        response.setHeader("Content-Range",String.valueOf(productList.size()));
         return new ResponseEntity<>(productList, HttpStatus.OK);
 
     }

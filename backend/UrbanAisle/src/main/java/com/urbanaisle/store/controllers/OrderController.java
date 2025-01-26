@@ -18,6 +18,7 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin
@@ -43,6 +44,13 @@ public class OrderController {
         Map<String,String> response = orderService.updateStatus(request.get("paymentIntent"),request.get("status"));
 
         return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
+    @PostMapping("/cancel/{id}")
+    public ResponseEntity<?> cancelOrder(@PathVariable UUID id, Principal principal){
+
+        orderService.cancelOrder(id, principal);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/user")
