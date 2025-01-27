@@ -3,6 +3,7 @@ package com.urbanaisle.store.controllers;
 import com.urbanaisle.store.dto.CategoryDto;
 import com.urbanaisle.store.entities.Category;
 import com.urbanaisle.store.services.CategoryService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,10 +30,10 @@ public class CategoryController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<Category>> getAllCategoryById(){
+    public ResponseEntity<List<Category>> getAllCategoryById(HttpServletResponse response){
 
         List<Category> category = categoryService.getAllCategories();
-
+        response.setHeader("Content-Range",String.valueOf(category.size()));
         return new ResponseEntity<>(category, HttpStatus.OK);
 
     }
