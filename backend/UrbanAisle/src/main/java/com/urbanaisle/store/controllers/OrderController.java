@@ -31,6 +31,7 @@ public class OrderController {
     @Autowired
     private PaymentIntentService paymentIntentService;
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping
     public ResponseEntity<?> createOrder(@RequestBody OrderDto orderDto, Principal principal) throws Exception {
 

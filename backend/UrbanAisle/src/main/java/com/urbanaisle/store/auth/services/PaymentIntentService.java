@@ -22,7 +22,7 @@ public class PaymentIntentService {
         PaymentIntentCreateParams paymentIntentCreateParams = PaymentIntentCreateParams.builder()
                 .setCustomer(user.getId().toString())
                 .setAmount(100L)
-                .setCurrency("inr")
+                .setCurrency("usd")
                 .putAllMetadata(metaData)
                 .setDescription("Test Payment ")
                 .setAutomaticPaymentMethods(

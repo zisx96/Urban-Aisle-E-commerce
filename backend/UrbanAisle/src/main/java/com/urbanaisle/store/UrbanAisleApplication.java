@@ -1,6 +1,8 @@
 package com.urbanaisle.store;
 
-import com.stripe.model.PaymentIntent;
+import com.stripe.Stripe;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -10,11 +12,20 @@ import org.springframework.web.filter.CorsFilter;
 
 import java.util.Arrays;
 import java.util.Collections;
+
 @SpringBootApplication
 public class UrbanAisleApplication {
 
+	@Value("${stripe.secret}")
+	private String stripeSecret;
+
 	public static void main(String[] args) {
 		SpringApplication.run(UrbanAisleApplication.class, args);
+	}
+
+	@PostConstruct
+	public void init(){
+		Stripe.apiKey = this.stripeSecret;
 	}
 
 	@Bean
@@ -26,7 +37,6 @@ public class UrbanAisleApplication {
 		config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "OPTIONS", "DELETE", "PATCH"));
 		config.setExposedHeaders(Arrays.asList("X-Total-Count", "X-Total-Count", "content-range", "Content-Type", "Accept", "X-Requested-With", "remember-me"));
 		source.registerCorsConfiguration("/**", config);
-		config.setAllowCredentials(true);
 		return new CorsFilter(source);
 	}
 

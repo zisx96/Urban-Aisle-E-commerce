@@ -3,16 +3,18 @@ import { loadStripe } from '@stripe/stripe-js';
 import React from 'react'
 import CheckoutPayment from './CheckoutPayment';
 
-const stripePromise = loadStripe('Your Stripe API');
+const stripePublishableKey = process.env.STRIPE_KEY || '';
 
-const Payment = ({props}) => {
+const stripePromise = loadStripe(stripePublishableKey);
+
+const Payment = (props) => {
 
   const options = {
 
     mode: 'payment',
-    amount: 10,
-    currency: 'inr',
-    apppearance: {
+    amount: 100,
+    currency: 'usd',
+    appearance: {
       theme: 'flat'
     },
   };
